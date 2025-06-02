@@ -25,3 +25,8 @@ STELLAR_LOGO = (By.XPATH, "//div[@class='AppHeader_header__logo__2D0X2']")  # Л
 BUN_SECTION = (By.XPATH, "//span[text()='Булки']")  # Булки
 SAUCE_SECTION = (By.XPATH, "//span[text()='Соусы']")  # Соусы
 FILLING_SECTION = (By.XPATH, "//span[text()='Начинки']")  # Начинки
+
+# Проверка активной вкладки конструктора
+ACTIVE_TAB_SAUCE = (By.XPATH, "//div[contains(@class, 'tab_tab_type_current')]/span[text()='Соусы']")
+ACTIVE_TAB_FILLING = (By.XPATH, "//div[contains(@class, 'tab_tab_type_current')]/span[text()='Начинки']")
+ACTIVE_TAB_BUN = (By.XPATH, "//div[contains(@class, 'tab_tab_type_current')]/span[text()='Булки']")

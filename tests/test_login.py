@@ -2,11 +2,12 @@ import pytest
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import *
+from data import TEST_EMAIL, TEST_PASSWORD
+from urls import BASE_URL
 
 @pytest.mark.usefixtures("driver")
 def test_login_from_main_page(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/")
-
+    driver.get(BASE_URL + "/")
     wait = WebDriverWait(driver, 10)
 
     # Кнопка «Войти в аккаунт» на главной
@@ -19,18 +20,17 @@ def test_login_from_main_page(driver):
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
     # Вводим данные
-    email_input.send_keys("oleg_bykhovskii_23@yandex.ru")
-    password_input.send_keys("010595oleg")
+    email_input.send_keys(TEST_EMAIL)
+    password_input.send_keys(TEST_PASSWORD)
     login_button.click()
 
     # Проверяем переход
-    wait.until(EC.url_to_be("https://stellarburgers.nomoreparties.site/"))
-    assert driver.current_url == "https://stellarburgers.nomoreparties.site/"
+    wait.until(EC.url_to_be(BASE_URL + "/"))
+    assert driver.current_url == BASE_URL + "/"
 
 @pytest.mark.usefixtures("driver")
 def test_login_from_account_button(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/")
-
+    driver.get(BASE_URL + "/")
     wait = WebDriverWait(driver, 10)
 
     # Кнопка «Личный кабинет»
@@ -43,18 +43,17 @@ def test_login_from_account_button(driver):
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
     # Вводим данные
-    email_input.send_keys("oleg_bykhovskii_23@yandex.ru")
-    password_input.send_keys("010595oleg")
+    email_input.send_keys(TEST_EMAIL)
+    password_input.send_keys(TEST_PASSWORD)
     login_button.click()
 
     # Проверяем переход
-    wait.until(EC.url_to_be("https://stellarburgers.nomoreparties.site/"))
-    assert driver.current_url == "https://stellarburgers.nomoreparties.site/"
+    wait.until(EC.url_to_be(BASE_URL + "/"))
+    assert driver.current_url == BASE_URL + "/"
 
 @pytest.mark.usefixtures("driver")
 def test_login_from_registration_page(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/register")
-
+    driver.get(BASE_URL + "/register")
     wait = WebDriverWait(driver, 10)
 
     # Ссылка «Войти» на странице регистрации
@@ -67,18 +66,17 @@ def test_login_from_registration_page(driver):
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
     # Вводим данные
-    email_input.send_keys("oleg_bykhovskii_23@yandex.ru")
-    password_input.send_keys("010595oleg")
+    email_input.send_keys(TEST_EMAIL)
+    password_input.send_keys(TEST_PASSWORD)
     login_button.click()
 
     # Проверяем переход
-    wait.until(EC.url_to_be("https://stellarburgers.nomoreparties.site/"))
-    assert driver.current_url == "https://stellarburgers.nomoreparties.site/"
+    wait.until(EC.url_to_be(BASE_URL + "/"))
+    assert driver.current_url == BASE_URL + "/"
 
 @pytest.mark.usefixtures("driver")
 def test_login_from_forgot_password_page(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/forgot-password")
-
+    driver.get(BASE_URL + "/forgot-password")
     wait = WebDriverWait(driver, 10)
 
     # Ссылка «Войти» на странице восстановления пароля
@@ -91,10 +89,10 @@ def test_login_from_forgot_password_page(driver):
     login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
     # Вводим данные
-    email_input.send_keys("oleg_bykhovskii_23@yandex.ru")
-    password_input.send_keys("010595oleg")
+    email_input.send_keys(TEST_EMAIL)
+    password_input.send_keys(TEST_PASSWORD)
     login_button.click()
 
     # Проверяем переход
-    wait.until(EC.url_to_be("https://stellarburgers.nomoreparties.site/"))
-    assert driver.current_url == "https://stellarburgers.nomoreparties.site/"
+    wait.until(EC.url_to_be(BASE_URL + "/"))
+    assert driver.current_url == BASE_URL + "/"
