@@ -5,94 +5,94 @@ from locators import *
 from data import TEST_EMAIL, TEST_PASSWORD
 from urls import BASE_URL
 
-@pytest.mark.usefixtures("driver")
-def test_login_from_main_page(driver):
-    driver.get(BASE_URL + "/")
-    wait = WebDriverWait(driver, 10)
-
-    # Кнопка «Войти в аккаунт» на главной
-    login_main_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
-    login_main_button.click()
-
-    # Появились поля входа
-    email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
-    password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
-    login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
-
-    # Вводим данные
-    email_input.send_keys(TEST_EMAIL)
-    password_input.send_keys(TEST_PASSWORD)
-    login_button.click()
-
-    # Проверяем переход
-    wait.until(EC.url_to_be(BASE_URL + "/"))
-    assert driver.current_url == BASE_URL + "/"
 
 @pytest.mark.usefixtures("driver")
-def test_login_from_account_button(driver):
-    driver.get(BASE_URL + "/")
-    wait = WebDriverWait(driver, 10)
+class TestLogin:
 
-    # Кнопка «Личный кабинет»
-    account_button = wait.until(EC.element_to_be_clickable(ACCOUNT_BUTTON))
-    account_button.click()
+    def test_login_from_main_page(self, driver):
+        driver.get(BASE_URL + "/")
+        wait = WebDriverWait(driver, 10)
 
-    # Поля входа
-    email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
-    password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
-    login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
+        # Кнопка «Войти в аккаунт» на главной
+        login_main_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
+        login_main_button.click()
 
-    # Вводим данные
-    email_input.send_keys(TEST_EMAIL)
-    password_input.send_keys(TEST_PASSWORD)
-    login_button.click()
+        # Появились поля входа
+        email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
+        password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
+        login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
-    # Проверяем переход
-    wait.until(EC.url_to_be(BASE_URL + "/"))
-    assert driver.current_url == BASE_URL + "/"
+        # Вводим данные
+        email_input.send_keys(TEST_EMAIL)
+        password_input.send_keys(TEST_PASSWORD)
+        login_button.click()
 
-@pytest.mark.usefixtures("driver")
-def test_login_from_registration_page(driver):
-    driver.get(BASE_URL + "/register")
-    wait = WebDriverWait(driver, 10)
+        # Проверяем переход
+        wait.until(EC.url_to_be(BASE_URL + "/"))
+        assert driver.current_url == BASE_URL + "/"
 
-    # Ссылка «Войти» на странице регистрации
-    login_link = wait.until(EC.element_to_be_clickable(LOGIN_LINK))
-    login_link.click()
+    def test_login_from_account_button(self, driver):
+        driver.get(BASE_URL + "/")
+        wait = WebDriverWait(driver, 10)
 
-    # Появились поля входа
-    email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
-    password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
-    login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
+        # Кнопка «Личный кабинет»
+        account_button = wait.until(EC.element_to_be_clickable(ACCOUNT_BUTTON))
+        account_button.click()
 
-    # Вводим данные
-    email_input.send_keys(TEST_EMAIL)
-    password_input.send_keys(TEST_PASSWORD)
-    login_button.click()
+        # Поля входа
+        email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
+        password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
+        login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
-    # Проверяем переход
-    wait.until(EC.url_to_be(BASE_URL + "/"))
-    assert driver.current_url == BASE_URL + "/"
+        # Вводим данные
+        email_input.send_keys(TEST_EMAIL)
+        password_input.send_keys(TEST_PASSWORD)
+        login_button.click()
 
-@pytest.mark.usefixtures("driver")
-def test_login_from_forgot_password_page(driver):
-    driver.get(BASE_URL + "/forgot-password")
-    wait = WebDriverWait(driver, 10)
+        # Проверяем переход
+        wait.until(EC.url_to_be(BASE_URL + "/"))
+        assert driver.current_url == BASE_URL + "/"
 
-    # Ссылка «Войти» на странице восстановления пароля
-    login_link = wait.until(EC.element_to_be_clickable(LOGIN_LINK))
-    login_link.click()
+    def test_login_from_registration_page(self, driver):
+        driver.get(BASE_URL + "/register")
+        wait = WebDriverWait(driver, 10)
 
-    # Появились поля входа
-    email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
-    password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
-    login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
+        # Ссылка «Войти» на странице регистрации
+        login_link = wait.until(EC.element_to_be_clickable(LOGIN_LINK))
+        login_link.click()
 
-    # Вводим данные
-    email_input.send_keys(TEST_EMAIL)
-    password_input.send_keys(TEST_PASSWORD)
-    login_button.click()
+        # Появились поля входа
+        email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
+        password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
+        login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
 
-    # Проверяем переход
-    wait.until(EC.url_to_be(BASE_URL + "/"))
-    assert driver.current_url == BASE_URL + "/"
+        # Вводим данные
+        email_input.send_keys(TEST_EMAIL)
+        password_input.send_keys(TEST_PASSWORD)
+        login_button.click()
+
+        # Проверяем переход
+        wait.until(EC.url_to_be(BASE_URL + "/"))
+        assert driver.current_url == BASE_URL + "/"
+
+    def test_login_from_forgot_password_page(self, driver):
+        driver.get(BASE_URL + "/forgot-password")
+        wait = WebDriverWait(driver, 10)
+
+        # Ссылка «Войти» на странице восстановления пароля
+        login_link = wait.until(EC.element_to_be_clickable(LOGIN_LINK))
+        login_link.click()
+
+        # Появились поля входа
+        email_input = wait.until(EC.presence_of_element_located(EMAIL_INPUT))
+        password_input = wait.until(EC.presence_of_element_located(PASSWORD_INPUT))
+        login_button = wait.until(EC.element_to_be_clickable(LOGIN_BUTTON))
+
+        # Вводим данные
+        email_input.send_keys(TEST_EMAIL)
+        password_input.send_keys(TEST_PASSWORD)
+        login_button.click()
+
+        # Проверяем переход
+        wait.until(EC.url_to_be(BASE_URL + "/"))
+        assert driver.current_url == BASE_URL + "/"

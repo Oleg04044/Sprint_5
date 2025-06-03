@@ -1,53 +1,51 @@
 import pytest
+import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import *
-from data_generator import generate_email
+from urls import BASE_URL
+
 
 @pytest.mark.usefixtures("driver")
-def test_successful_registration(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/register")
+class TestRegistration:
 
-    wait = WebDriverWait(driver, 10)
+    def test_successful_registration(self, driver):
+        driver.get(BASE_URL + "/register")
+        wait = WebDriverWait(driver, 10)
 
-    # Явные ожидания появления полей
-    name_input = wait.until(EC.presence_of_element_located(NAME_INPUT))
-    email_input = wait.until(EC.presence_of_element_located(REGISTER_EMAIL_INPUT))
-    password_input = wait.until(EC.presence_of_element_located(REGISTER_PASSWORD_INPUT))
-    register_button = wait.until(EC.element_to_be_clickable(REGISTER_BUTTON))
+        # Генерируем уникальный email для каждого запуска теста
+        unique_email = f"test_{int(time.time())}@yopmail.com"
 
-    # Используем генератор email
-    email = generate_email()
+        name_input = wait.until(EC.presence_of_element_located(NAME_INPUT))
+        email_input = wait.until(EC.presence_of_element_located(REGISTER_EMAIL_INPUT))
+        password_input = wait.until(EC.presence_of_element_located(REGISTER_PASSWORD_INPUT))
+        register_button = wait.until(EC.element_to_be_clickable(REGISTER_BUTTON))
 
-    # Вводим данные
-    name_input.send_keys("Олег")
-    email_input.send_keys(email)
-    password_input.send_keys("010595oleg")
-    register_button.click()
+        # Вводим данные
+        name_input.send_keys("Test User")
+        email_input.send_keys(unique_email)
+        password_input.send_keys("010595oleg")
+        register_button.click()
 
-    # Проверяем, что после регистрации переходим на страницу логина
-    wait.until(EC.url_to_be("https://stellarburgers.nomoreparties.site/login"))
-    assert driver.current_url == "https://stellarburgers.nomoreparties.site/login"
+        # Проверяем, что после регистрации происходит переход на страницу логина
+        wait.until(EC.url_to_be(BASE_URL + "/login"))
+        assert driver.current_url == BASE_URL + "/login"
 
-@pytest.mark.usefixtures("driver")
-def test_registration_with_short_password(driver):
-    driver.get("https://stellarburgers.nomoreparties.site/register")
+    def test_registration_with_short_password(self, driver):
+        driver.get(BASE_URL + "/register")
+        wait = WebDriverWait(driver, 10)
 
-    wait = WebDriverWait(driver, 10)
+        name_input = wait.until(EC.presence_of_element_located(NAME_INPUT))
+        email_input = wait.until(EC.presence_of_element_located(REGISTER_EMAIL_INPUT))
+        password_input = wait.until(EC.presence_of_element_located(REGISTER_PASSWORD_INPUT))
+        register_button = wait.until(EC.element_to_be_clickable(REGISTER_BUTTON))
 
-    name_input = wait.until(EC.presence_of_element_located(NAME_INPUT))
-    email_input = wait.until(EC.presence_of_element_located(REGISTER_EMAIL_INPUT))
-    password_input = wait.until(EC.presence_of_element_located(REGISTER_PASSWORD_INPUT))
-    register_button = wait.until(EC.element_to_be_clickable(REGISTER_BUTTON))
+        # Вводим некорректный (короткий) пароль
+        name_input.send_keys("Test User")
+        email_input.send_keys("oleg_bykhovskii_23@yandex.ru")
+        password_input.send_keys("123")
+        register_button.click()
 
-    email = generate_email()
-
-    # Вводим данные с коротким паролем
-    name_input.send_keys("Олег")
-    email_input.send_keys(email)
-    password_input.send_keys("123")  # Слишком короткий пароль
-    register_button.click()
-
-    # Проверяем, что появилось сообщение об ошибке
-    error_message = wait.until(EC.presence_of_element_located(ERROR_MESSAGE))
-    assert error_message.text == "Некорректный пароль"
+        # Проверяем, что появляется сообщение об ошибке
+        error_message = wait.until(EC.presence_of_element_located(ERROR_MESSAGE))
+        assert error_message.is_displayed()

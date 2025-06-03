@@ -1,5 +1,4 @@
 import pytest
-import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from locators import *
@@ -34,9 +33,6 @@ class TestConstructorSections:
     def test_bun_section(self, driver):
         driver.get("https://stellarburgers.nomoreparties.site/")
         wait = WebDriverWait(driver, 10)
-
-        time.sleep(2)
-
         wait.until(EC.invisibility_of_element_located((By.CSS_SELECTOR, ".modal")))
 
         # Кликаем на «Булки»
